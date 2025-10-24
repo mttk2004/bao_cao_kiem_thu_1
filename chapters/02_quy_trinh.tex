@@ -1,0 +1,35 @@
+% --- CHƯƠNG 2: QUY TRÌNH ---
+\chapter{Quy trình review code}
+
+Quy trình review code của nhóm được thực hiện theo 3 bước chính: Chuẩn bị, Thực hiện và Tổng hợp.
+
+\section{Chuẩn bị}
+\begin{itemize}
+    \item \textbf{Nghiên cứu Checklist:} Nghiên cứu và hiểu rõ 66 mục trong sheet \texttt{"Check list"} trong file \texttt{"Code Review Report Sample.xlsx"} được cung cấp. Các mục này được chia thành 6 loại (DEVIATION, OMISSION, DEFECT, AMBIGUITY, REDUNDANCE, và các mục con).
+    \item \textbf{Chuẩn bị công cụ:} Sử dụng Microsoft Excel để ghi lại các phát hiện (file \texttt{nhom46\_code\_review.xlsx}) và Visual Studio Code để xem xét mã nguồn Java.
+    \item \textbf{Mục tiêu:} Đối tượng review là 22 file mã nguồn \texttt{.java} của một dự án Web E-commerce.
+\end{itemize}
+
+\section{Thực hiện}
+\begin{itemize}
+    \item Tiến hành đọc và phân tích thủ công từng file \texttt{.java}.
+    \item Đối với mỗi file, duyệt qua 66 mục của checklist để xác định các vi phạm.
+    \item Khi phát hiện vi phạm, ghi lại thông tin vào sheet Excel tương ứng với file đó, bao gồm:
+    \begin{itemize}
+        \item \textbf{Check code:} Mã lỗi vi phạm (ví dụ: 15).
+        \item \textbf{Check code Description:} Mô tả của mã lỗi.
+        \item \textbf{Line:} Dòng code xảy ra vi phạm.
+        \item \textbf{Comment:} Mô tả chi tiết về lỗi vi phạm.
+        \item \textbf{Suggestion / Fix ?:} Đề xuất cách sửa lỗi.
+    \end{itemize}
+\end{itemize}
+
+\section{Tổng hợp}
+\begin{itemize}
+    \item Sau khi hoàn tất review 22 file, toàn bộ dữ liệu từ các sheet Excel được tổng hợp lại.
+    \item Sử dụng thư viện \texttt{pandas} và \texttt{matplotlib} của Python để phân tích và trực quan hóa dữ liệu tổng hợp.
+    \item Các biểu đồ thống kê được tạo ra để cung cấp cái nhìn tổng quan về chất lượng mã nguồn (xem Chương 4).
+    \item Viết báo cáo để trình bày lại toàn bộ quy trình, các phát hiện nghiêm trọng và kết quả thống kê.
+\end{itemize}
+
+\newpage

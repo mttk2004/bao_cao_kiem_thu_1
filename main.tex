@@ -1,0 +1,116 @@
+\documentclass[11pt, a4paper]{report}
+
+% --- CÀI ĐẶT UNIVERSAL PREAMBLE ---
+% Gói này rất quan trọng để hỗ trợ tiếng Việt
+\usepackage{fontspec} % Cho phép chọn font
+\usepackage{polyglossia}
+\setdefaultlanguage{vietnamese}
+
+% Cấu hình lề giấy
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+% Chọn font Times New Roman cho chữ chính và JetBrains Mono cho code
+\setmainfont{Times New Roman}
+\setmonofont{JetBrains Mono}[Scale=0.9]
+
+% Định nghĩa font riêng cho listings
+\newfontfamily\listingsfont{JetBrains Mono}[Scale=0.9]
+
+% Sửa lỗi hiển thị gạch đầu dòng (list bullets)
+\usepackage{enumitem}
+\setlist[itemize]{label=-}
+
+% --- CÁC GÓI BỔ SUNG CHO BÁO CÁO NÀY ---
+\usepackage{graphicx}     % Để chèn hình ảnh (biểu đồ)
+\usepackage{booktabs}     % Cho bảng đẹp (bảng phân công)
+\usepackage{listings}     % Để chèn code Java
+\usepackage{xcolor}       % Để định nghĩa màu cho code
+\usepackage{hyperref}     % Cho mục lục có thể nhấp vào (luôn để cuối cùng)
+
+% Cấu hình màu sắc cho code listing
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.98,0.98,0.98}
+
+% Cấu hình style cho code Java với XeLaTeX
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\listingsfont\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+% Cấu hình chung cho listings
+\lstset{style=mystyle}
+
+% --- BẮT ĐẦU TÀI LIỆU ---
+\begin{document}
+
+% --- TRANG BÌA ---
+\begin{titlepage}
+    \centering
+    \sffamily
+
+    % Cập nhật đường dẫn hình ảnh logo
+    \includegraphics[width=0.3\textwidth]{images/logo_sgu.png}
+    \vspace{1cm}
+
+    {\Large ỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH\par}
+    {\LARGE \textbf{TRƯỜNG ĐẠI HỌC SÀI GÒN}\par}
+    {\Large \textbf{KHOA CÔNG NGHỆ THÔNG TIN}\par}
+
+    \vfill
+
+    {\Huge \textbf{BÁO CÁO}}\par
+    \vspace{0.5cm}
+    {\Large HỌC PHẦN: KIỂM THỬ PHẦN MỀM (841408)}\par
+    
+    \vspace{1cm}
+    {\Huge \textbf{CODE TECHNICAL REVIEW}}\par
+
+    \vfill
+
+    \begin{flushright}
+    \large
+    \begin{tabular}{ll}
+        \textbf{Nhóm lớp:} & L01 \\
+        \textbf{Giảng viên:} & ThS. Từ Lãng Phiêu \\
+        \textbf{Nhóm thực hiện:} & 46 \\
+    \end{tabular}
+    \end{flushright}
+
+    \vspace{0.5cm}
+
+    \textbf{\large Danh sách thành viên:}\par
+    \large Mai Trần Tuấn Kiệt – 3122560038\par
+
+    \vfill
+
+    {\large Thành phố Hồ Chí Minh, tháng 10 năm 2025\par}
+\end{titlepage}
+
+% --- MỤC LỤC ---
+\tableofcontents
+\newpage
+
+% --- NẠP CÁC CHƯƠNG TỪ CÁC FILE RIÊNG ---
+\input{chapters/01_phan_cong.tex}
+\input{chapters/02_quy_trinh.tex}
+\input{chapters/03_van_de.tex}
+\input{chapters/04_thong_ke.tex}
+\input{chapters/05_ket_luan.tex}
+
+\end{document}
