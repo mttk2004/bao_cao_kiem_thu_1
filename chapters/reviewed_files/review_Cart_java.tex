@@ -1,0 +1,51 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Cart.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Cart.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Cart.java}} \label{tab:review_Cart_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    28 & Has an "\&" inadvertently been interchanged with a "\&\&" or a "|" for a "||"? & 20 & Sử dụng toán tử gán = thay vì so sánh ==, gây lỗi compilation & if (s.getISBN() == sale.getISBN()) \\
+    \midrule
+    12 & Do all attributes have appropriate access modifiers (private, protected, public)? & 9 & Thuộc tính cart thiếu access modifier & private ArrayList\textless{}Sale\textgreater{} cart; \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 18 & Method addSale không kiểm tra tham số sale có null hay không & Thêm kiểm tra if (sale == null) return; \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 32 & Method removeSale không kiểm tra ISBN có hợp lệ (\textgreater{} 0) & Thêm kiểm tra if (ISBN \textless{}= 0) return false; \\
+    \midrule
+    27 & Are there improper and unnoticed side-effects of a comparison? & 33 & Vòng lặp enhanced for với remove() gây ConcurrentModificationException & Sử dụng Iterator hoặc vòng lặp for thông thường \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 49 & Method getCart trả về reference trực tiếp, có thể bị modify từ bên ngoài & return new ArrayList\textless{}\textgreater{}(cart); để bảo vệ encapsulation \\
+    \midrule
+    20 & Are there any computations with mixed data types? & 56 & Tính toán sum với int nhưng price có thể là double, mất độ chính xác & Đổi return type thành double và sum thành double \\
+    \midrule
+    21 & Is overflow or underflow possible during a computation? & 56 & Biến sum kiểu int có thể overflow khi tổng giá trị lớn & Sử dụng long hoặc double cho sum \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 55 & Không kiểm tra sale trong cart có null hay không & Thêm kiểm tra if (sale == null) continue; \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 72 & Method setUser\_id không kiểm tra tham số user\_id có null hay empty & Thêm kiểm tra if (user\_id == null || user\_id.trim().isEmpty()) \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 7 & Class Cart thiếu header comment tổng quan & Thêm Javadoc comment mô tả class Cart \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 77 & Method checkOut không xử lý exception có thể xảy ra từ SalesDAO.checkout & Thêm try-catch hoặc throws exception \\
+\end{longtable}

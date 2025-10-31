@@ -1,0 +1,41 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{BookCategory.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{BookCategory.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{BookCategory.java}} \label{tab:review_BookCategory_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 4 & Enum value Art không tuân theo Java naming convention cho constants & ART \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 5 & Enum value Science không tuân theo Java naming convention cho constants & SCIENCE \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 6 & Enum value Religion không tuân theo Java naming convention cho constants & RELIGION \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 7 & Enum value History không tuân theo Java naming convention cho constants & HISTORY \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 8 & Enum value Geography không tuân theo Java naming convention cho constants & GEOGRAPHY \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 3 & Enum BookCategory thiếu header comment & Thêm Javadoc comment mô tả enum và mục đích sử dụng \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 4 & Các enum values thiếu comment giải thích & Thêm comment cho từng category để giải thích ý nghĩa \\
+\end{longtable}

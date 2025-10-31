@@ -1,0 +1,41 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Logout.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Logout.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Logout.java}} \label{tab:review_Logout_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    45 & Does every method, class, and file have an appropriate header comment? & 11 & class thiếu javadoc comment & thêm /** javadoc comment */ \\
+    \midrule
+    12 & Do all attributes have appropriate access modifiers (private, protected, public)? & 14 & method doGet() nên có @Override annotation & thêm @Override annotation \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 18 & request.getSession() có thể throw exception nếu session invalid & thêm try-catch block \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 18 & request.getSession() có thể return null & kiểm tra null trước khi invalidate() \\
+    \midrule
+    64 & Are there any uncalled or unneeded methods? & 11-20 & không có doPost() method, chỉ có doGet() & thêm doPost() hoặc comment giải thích tại sao chỉ có GET \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 19 & request.getRequestDispatcher() có thể throw exception & thêm try-catch cho dispatcher operations \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 3 & có import rỗng ở line 3 & xóa empty import line \\
+\end{longtable}

@@ -1,0 +1,53 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Book.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Book.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Book.java}} \label{tab:review_Book_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    8 & Is every variable properly initialized? & 15 & Thuộc tính title không được khởi tạo trong constructor & title = ""; \\
+    \midrule
+    8 & Is every variable properly initialized? & 15 & Thuộc tính publisherName không được khởi tạo trong constructor & publisherName = ""; \\
+    \midrule
+    8 & Is every variable properly initialized? & 15 & Thuộc tính authorsNames không được khởi tạo trong constructor & authorsNames = new ArrayList\textless{}\textgreater{}(); \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 60 & Setter setPrice không kiểm tra giá trị âm & Thêm kiểm tra if (price != null \&\& price \textgreater{}= 0) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 76 & Setter setThreshold không kiểm tra giá trị âm & Thêm kiểm tra if (threshold \textgreater{}= 0) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 80 & Setter setNumberOfCopies không kiểm tra giá trị âm & Thêm kiểm tra if (numberOfCopies \textgreater{}= 0) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 84 & Setter setAuthorsNames không kiểm tra null & Thêm kiểm tra if (authorsNames != null) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 88 & Setter setNumberOfSalesCopies không kiểm tra giá trị âm & Thêm kiểm tra if (numberOfSalesCopies \textgreater{}= 0) \\
+    \midrule
+    16 & Does each class have an appropriate constructor? & 5 & Thiếu constructor có tham số để khởi tạo Book với giá trị cụ thể & Thêm constructor Book(int ISBN, String title, ...) \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 50 & Getter getAuthorsNames có thể trả về null gây NullPointerException & Kiểm tra null trước khi return hoặc khởi tạo trong constructor \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 5 & Class Book thiếu header comment & Thêm Javadoc comment mô tả class \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 6 & Các thuộc tính thiếu comment giải thích & Thêm comment cho từng thuộc tính \\
+    \midrule
+    54 & For each method: Is it no more than about 60 lines long? & 5 & Class có quá nhiều getter/setter, có thể cần refactor & Xem xét sử dụng builder pattern hoặc chia nhỏ class \\
+\end{longtable}

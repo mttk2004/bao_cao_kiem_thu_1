@@ -1,0 +1,51 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Order.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Order.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Order.java}} \label{tab:review_Order_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 10 & Tên thuộc tính book\_name vi phạm Java naming convention & bookName \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 34 & Setter setISBN không kiểm tra giá trị âm hoặc 0 & Thêm kiểm tra if (ISBN \textless{}= 0) throw new IllegalArgumentException \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 38 & Setter setOrderID không kiểm tra null hoặc empty string & Thêm kiểm tra if (orderID == null || orderID.trim().isEmpty()) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 42 & Setter setQuantity không kiểm tra giá trị âm hoặc 0 & Thêm kiểm tra if (quantity \textless{}= 0) throw new IllegalArgumentException \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 16 & Setter setBook\_name không kiểm tra null hoặc empty string & Thêm kiểm tra if (book\_name == null || book\_name.trim().isEmpty()) \\
+    \midrule
+    16 & Does each class have an appropriate constructor? & 3 & Class Order thiếu constructor để khởi tạo với các giá trị & Thêm default constructor và constructor với tham số \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 3 & Class Order thiếu header comment & Thêm Javadoc comment mô tả class Order \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 4 & Thuộc tính orderID thiếu comment & Thêm comment giải thích ID đơn hàng \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 5 & Thuộc tính ISBN thiếu comment & Thêm comment giải thích mã ISBN của sách \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 6 & Thuộc tính quantity thiếu comment & Thêm comment giải thích số lượng sách đặt hàng \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 12 & Method getBook\_name() vi phạm Java naming convention & getBookName() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 16 & Method setBook\_name() vi phạm Java naming convention & setBookName(String bookName) \\
+\end{longtable}

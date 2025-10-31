@@ -1,13 +1,13 @@
 % --- CHƯƠNG 3: VẤN ĐỀ CHÍNH ---
 \chapter{Các vấn đề và đề xuất}
-Qua quá trình review, đã phát hiện tổng cộng \textbf{166 lỗi} trên 22 file. Dưới đây là các vấn đề nổi bật và nghiêm trọng nhất được phân loại theo mức độ ảnh hưởng.
+Qua quá trình review, đã phát hiện tổng cộng \textbf{304 lỗi} trên 22 file. Dưới đây là các vấn đề nổi bật và nghiêm trọng nhất được phân loại theo mức độ ảnh hưởng.
 
-\section{Lỗi Bảo mật Nghiêm trọng: SQL Injection (Hạng: Critical)}
+\section{Lỗi Bảo mật Nghiêm trọng: SQL Injection (Critical)}
 \textbf{Vấn đề:} Đây là lỗi nghiêm trọng nhất, xuất hiện lặp lại ở hầu hết các class DAO (Data Access Object) như \texttt{BookDAO.java}, \texttt{UserDAO.java}, \texttt{OrderDAO.java}, và \texttt{SalesDAO.java}. Mã nguồn đang sử dụng phương thức cộng chuỗi (string concatenation) để xây dựng các câu lệnh SQL, cho phép kẻ tấn công chèn mã SQL độc hại và truy cập trái phép vào cơ sở dữ liệu.
 
 \textbf{Ví dụ (từ \texttt{UserDAO.java}):}
 \begin{lstlisting}[language=Java, caption={Lỗ hổng SQL Injection trong UserDAO.java (Line 25)}, firstnumber=25]
-// Lỗi: Cộng chuỗi trực tiếp từ input của người dùng
+// Loi: Cong chuoi truc tiep tu input cua nguoi dung
 String query = "SELECT * FROM user WHERE email = '" + email + "'";
 // ...
 ResultSet rs = st.executeQuery(query);
@@ -17,28 +17,28 @@ ResultSet rs = st.executeQuery(query);
 
 \textbf{Ví dụ sửa lỗi:}
 \begin{lstlisting}[language=Java, caption={Sửa lỗi bằng PreparedStatement}]
-// Sửa lỗi: Sử dụng PreparedStatement với tham số '?'
+// Sua loi: Su dung PreparedStatement voi tham so '?'
 String query = "SELECT * FROM user WHERE email = ?";
 PreparedStatement ps = connection.prepareStatement(query);
 ps.setString(1, email);
 ResultSet rs = ps.executeQuery();
 \end{lstlisting}
 
-\section{Lỗi Bảo mật Nghiêm trọng: Lộ thông tin nhạy cảm (Hạng: Critical)}
+\section{Lỗi Bảo mật Nghiêm trọng: Lộ thông tin nhạy cảm (Critical)}
 \textbf{Vấn đề:} File \texttt{ModelManager.java} (class quản lý kết nối CSDL) chứa thông tin đăng nhập (username và password) được \textbf{hardcode} (mã hóa cứng) trực tiếp trong mã nguồn. Điều này cực kỳ nguy hiểm vì bất kỳ ai có quyền truy cập vào mã nguồn đều có thể thấy và đánh cắp thông tin đăng nhập CSDL.
 
 \textbf{Ví dụ (từ \texttt{ModelManager.java}):}
 \begin{lstlisting}[language=Java, caption={Thông tin nhạy cảm bị hardcode (Line 8-10)}, firstnumber=8]
 private static final String url = "jdbc:mysql://localhost:3306/bookstore";
 private static final String dbuser = "root";
-// Lỗi: Mật khẩu bị hardcode (dù đã bị comment)
+// Loi: Mat khau bi hardcode (du da bi comment)
 // private static final String dbpass = "123456";
 private static final String dbpass = "admin";
 \end{lstlisting}
 
 \textbf{Đề xuất:} Xóa ngay lập tức thông tin đăng nhập khỏi mã nguồn. Sử dụng các cơ chế an toàn hơn như biến môi trường (environment variables) hoặc file cấu hình (ví dụ: \texttt{.properties}, \texttt{.env}) để lưu trữ và tải thông tin này khi ứng dụng khởi chạy.
 
-\section{Lỗi Bảo mật Cao: Mật mã yếu (Hạng: High)}
+\section{Lỗi Bảo mật Cao: Mật mã yếu (High)}
 \textbf{Vấn đề:} Class \texttt{PasswordEncryptionService.java} chịu trách nhiệm mã hóa mật khẩu nhưng sử dụng các thuật toán và thông số đã lỗi thời, không còn an toàn:
 \begin{itemize}
     \item \textbf{Thuật toán yếu:} Sử dụng \texttt{PBKDF2WithHmacSHA1}. Thuật toán SHA-1 đã bị xem là không an toàn, nên sử dụng SHA-256 hoặc SHA-512.
@@ -53,7 +53,7 @@ private static final String dbpass = "admin";
     \item Tăng kích thước salt (salt size) lên 16 hoặc 32 bytes.
 \end{itemize}
 
-\section{Xử lý ngoại lệ không đầy đủ (Hạng: Medium)}
+\section{Xử lý ngoại lệ không đầy đủ (Medium)}
 \textbf{Vấn đề:} Lỗi này xuất hiện rất phổ biến (ví dụ: \texttt{Register.java}, \texttt{Statistics.java}). Khi một ngoại lệ (Exception) xảy ra, mã nguồn chỉ gọi \texttt{e.printStackTrace()}. Điều này không cung cấp thông báo lỗi thân thiện cho người dùng và không ghi lại lỗi một cách có hệ thống, khiến việc debug và bảo trì rất khó khăn.
 
 \textbf{Đề xuất:}
@@ -62,12 +62,12 @@ private static final String dbpass = "admin";
     \item Đối với các lỗi trong servlet, hãy chuyển hướng (forward) người dùng đến một trang lỗi (ví dụ: \texttt{error.jsp}) với thông báo lỗi rõ ràng.
 \end{itemize}
 
-\section{Nguy cơ NullPointerException (Hạng: Medium)}
+\section{Nguy cơ NullPointerException (Medium)}
 \textbf{Vấn đề:} Nhiều phần của mã nguồn không kiểm tra giá trị \texttt{null} trước khi sử dụng, đặc biệt là khi lấy dữ liệu từ \texttt{request.getParameter()} (ví dụ: \texttt{Login.java}, \texttt{BookUpdate.java}) hoặc khi các phương thức DAO trả về \texttt{null}.
 
 \textbf{Đề xuất:} Luôn luôn kiểm tra giá trị \texttt{null} đối với các biến có thể là \texttt{null} trước khi gọi phương thức trên chúng. Sử dụng \texttt{if (variable != null)} hoặc các kỹ thuật so sánh chuỗi an toàn như \texttt{"constant".equals(variable)}.
 
-\section{Vi phạm quy ước và thiết kế (Hạng: Low)}
+\section{Vi phạm quy ước và thiết kế (Low)}
 \textbf{Vấn đề:}
 \begin{itemize}
     \item \textbf{Naming Convention:} Nhiều thuộc tính và phương thức sử dụng \texttt{snake\_case} (ví dụ: \texttt{book\_name}, \texttt{sum\_paid}) thay vì \texttt{camelCase} (ví dụ: \texttt{bookName}, \texttt{sumPaid}) theo chuẩn của Java.

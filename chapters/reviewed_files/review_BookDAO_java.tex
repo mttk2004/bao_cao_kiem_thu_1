@@ -1,0 +1,63 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{BookDAO.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{BookDAO.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{BookDAO.java}} \label{tab:review_BookDAO_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    15 & Is every method parameter value checked before being used? & 26 & SQL concatenation trực tiếp với count và offset gây SQL injection vulnerability & Sử dụng PreparedStatement với placeholders \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 59 & SQL concatenation trực tiếp với ISBN gây SQL injection vulnerability & Sử dụng PreparedStatement với placeholder cho ISBN \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 248 & Method findByTitle() có SQL injection vulnerability với title parameter & Sử dụng PreparedStatement thay vì string concatenation \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 263 & Method findByISBN() có SQL injection vulnerability với ISBN parameter & Sử dụng PreparedStatement thay vì string concatenation \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 282 & Method findByAuthor() có SQL injection vulnerability với authorName parameter & Sử dụng PreparedStatement thay vì string concatenation \\
+    \midrule
+    40 & Have all files been closed after use? & 31 & ResultSet có thể không được close nếu có exception xảy ra trong while loop & Sử dụng try-with-resources hoặc finally block \\
+    \midrule
+    40 & Have all files been closed after use? & 254 & ResultSet trong findByTitle() có thể không được close nếu có exception & Sử dụng try-with-resources để auto-close \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 105 & newBook.getAuthorsNames() có thể null gây NullPointerException & Kiểm tra null trước khi iterate: if (newBook.getAuthorsNames() != null) \\
+    \midrule
+    57 & Is every result that is computed and stored actually used? & 335 & Biến matchedBooks được khai báo 2 lần trong method find() & Xóa dòng khai báo thứ 2: ArrayList\textless{}Book\textgreater{} matchedBooks = new ArrayList\textless{}\textgreater{}(); \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 87 & Exception chỉ printStackTrace() không return thông báo lỗi phù hợp & Log error và return false hoặc throw meaningful exception \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 244 & Method findByTitle() không kiểm tra parameter title có null hay empty & Thêm validation: if (title == null || title.trim().isEmpty()) return null; \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 256 & Method findByTitle() gọi buildBook() nhưng không kiểm tra resultSet.next() & Thêm if (resultSet.next()) trước khi gọi buildBook() \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 269 & Method findByISBN() gọi resultSet.next() nhưng không kiểm tra return value & Thêm kiểm tra if (resultSet.next()) trước buildBook() \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 77 & Method addNewBook() không validate các thuộc tính của newBook & Validate title, publisher, category không null trước khi insert \\
+    \midrule
+    22 & Are parentheses used to avoid ambiguity? & 197 & Complex SQL query construction thiếu validation và rất khó đọc & Chia nhỏ thành các methods riêng biệt và sử dụng StringBuilder \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 151 & Method modifyBook() có nhiều SQLException nhưng không rollback transaction & Sử dụng database transaction với rollback khi có lỗi \\
+    \midrule
+    54 & For each method: Is it no more than about 60 lines long? & 187 & Method modifyBook() quá dài (hơn 60 lines) và phức tạp & Chia thành các methods nhỏ hơn: updateAuthors(), updateBook() \\
+    \midrule
+    66 & Are there any blocks of repeated code that could be condensed into a single method? & 18 & Pattern tạo SQL query và xử lý ResultSet được lặp lại nhiều lần & Tạo utility method để execute query và build results \\
+\end{longtable}

@@ -1,0 +1,71 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{User.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{User.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{User.java}} \label{tab:review_User_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    12 & Do all attributes have appropriate access modifiers (private, protected, public)? & 17 & Thuộc tính sum\_copies không có access modifier, mặc định là package-private & private int sum\_copies; \\
+    \midrule
+    12 & Do all attributes have appropriate access modifiers (private, protected, public)? & 18 & Thuộc tính sum\_paid không có access modifier, mặc định là package-private & private int sum\_paid; \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 20 & Tên thuộc tính sum\_copies vi phạm Java naming convention & sumCopies \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 18 & Tên thuộc tính sum\_paid vi phạm Java naming convention & sumPaid \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 20 & Method getSum\_paid() vi phạm Java naming convention & getSumPaid() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 24 & Method setSum\_paid() vi phạm Java naming convention & setSumPaid(int sumPaid) \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 28 & Method getSum\_copies() vi phạm Java naming convention & getSumCopies() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 32 & Method setSum\_copies() vi phạm Java naming convention & setSumCopies(int sumCopies) \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 56 & Method getfName() vi phạm Java naming convention & getFirstName() hoặc getFName() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 60 & Method getlName() vi phạm Java naming convention & getLastName() hoặc getLName() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 76 & Method setlName() vi phạm Java naming convention & setLastName(String lName) hoặc setLName() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 80 & Method setfName() vi phạm Java naming convention & setFirstName(String fName) hoặc setFName() \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 48 & Getter getEncryptedPassword() trả về reference trực tiếp của byte array, có thể bị modify & return encryptedPassword != null ? encryptedPassword.clone() : null; \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 52 & Getter getSalt() trả về reference trực tiếp của byte array, có thể bị modify & return salt != null ? salt.clone() : null; \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 37 & Constructor không kiểm tra các tham số có null hay empty & Thêm validation cho email, fName, lName, phoneNumber, shippingAddress \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 72 & Setter setEmail không kiểm tra email format và null & Thêm validation email pattern và null check \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 84 & Setter setEncryptedPassword không kiểm tra null và tạo defensive copy & this.encryptedPassword = encryptedPassword != null ? encryptedPassword.clone() : null; \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 88 & Setter setSalt không kiểm tra null và tạo defensive copy & this.salt = salt != null ? salt.clone() : null; \\
+    \midrule
+    5 & Does the code completely implement the design? & 108 & Method searchBook() có body trống, chưa được implement & Implement logic tìm kiếm sách hoặc đánh dấu TODO \\
+    \midrule
+    35 & Are null bodied control structures correct and marked with braces or comments? & 108 & Các methods có body trống nên được đánh dấu với comment TODO & Thêm // TODO: implement this method cho tất cả empty methods \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 5 & Class User thiếu header comment tổng quan & Thêm Javadoc comment mô tả class User và vai trò \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 6 & Nhiều thuộc tính thiếu comment giải thích & Thêm comment cho userID, encryptedPassword, salt, email, etc. \\
+\end{longtable}

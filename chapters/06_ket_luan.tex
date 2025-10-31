@@ -1,0 +1,22 @@
+% --- CHƯƠNG 5: KẾT LUẬN ---
+\chapter{Kết luận}
+
+Quá trình review code thủ công \textbf{22 file} mã nguồn Java đã phát hiện tổng cộng \textbf{304 lỗi} vi phạm checklist.
+Số loại lỗi (theo Check code) riêng biệt: \textbf{33 lỗi}.
+Phân tích thống kê cho thấy các vấn đề nghiêm trọng nhất không chỉ tồn tại mà còn lặp lại một cách có hệ thống, tập trung vào các nhóm lỗi:
+\begin{enumerate}
+    \item \textbf{DEFECT (85.9\%):} Chiếm đa số, bao gồm các lỗi nghiêm trọng nhất như SQL Injection, mật khẩu hardcode, và mật mã yếu.
+    \item \textbf{DEVIATION (6.2\%):} Chủ yếu là vi phạm quy ước đặt tên (naming convention).
+\end{enumerate}
+
+Các file DAO (\texttt{BookDAO.java}, \texttt{UserDAO.java}, \texttt{SalesDAO.java}) và các Servlet (\texttt{BookUpdate.java}) là những nơi tập trung nhiều lỗi nhất và cũng là những nơi cần được ưu tiên sửa chữa.
+
+\vspace{1cm}
+
+Dựa trên các kết quả phân tích, nhóm xin đề xuất các giải pháp sau:
+\begin{itemize}
+    \item \textbf{Ưu tiên khắc phục lỗ hổng bảo mật}: Ngay lập tức sửa các lỗi SQL Injection bằng cách chuyển toàn bộ các câu lệnh SQL sang sử dụng \texttt{PreparedStatement}. Tổ chức một buổi training về các phương pháp lập trình an toàn cho toàn bộ đội ngũ phát triển.
+    \item \textbf{Xây dựng quy trình xác thực đầu vào (Input Validation) bắt buộc}: Thiết lập một quy tắc chung, yêu cầu tất cả các dữ liệu đầu vào (từ người dùng, API, hoặc các module khác) phải được kiểm tra (null, rỗng, định dạng, miền giá trị) trước khi xử lý.
+    \item \textbf{Áp dụng công cụ phân tích mã tĩnh (Static Code Analysis)}: Tích hợp các công cụ như SonarQube hoặc Checkstyle vào quy trình CI/CD để tự động phát hiện các lỗi phổ biến và các "code smell" trước khi mã nguồn được hợp nhất.
+    \item \textbf{Cải thiện quy trình xử lý ngoại lệ}: Xây dựng một chiến lược xử lý exception nhất quán, ghi log đầy đủ thông tin lỗi để dễ dàng gỡ rối, và tránh việc "nuốt" exception một cách thầm lặng.
+\end{itemize}

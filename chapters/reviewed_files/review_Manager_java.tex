@@ -1,0 +1,51 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Manager.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Manager.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Manager.java}} \label{tab:review_Manager_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    5 & Does the code completely implement the design? & 12 & Method addNewBook() có body trống, chưa được implement & Implement logic thêm sách mới hoặc đánh dấu TODO \\
+    \midrule
+    5 & Does the code completely implement the design? & 18 & Method modifyBook() có body trống, chưa được implement & Implement logic sửa thông tin sách hoặc đánh dấu TODO \\
+    \midrule
+    5 & Does the code completely implement the design? & 24 & Method placeOrder() có body trống, chưa được implement & Implement logic đặt hàng hoặc đánh dấu TODO \\
+    \midrule
+    5 & Does the code completely implement the design? & 30 & Method confirmOrder() có body trống, chưa được implement & Implement logic xác nhận đơn hàng hoặc đánh dấu TODO \\
+    \midrule
+    5 & Does the code completely implement the design? & 36 & Method promoteUser() có body trống, chưa được implement & Implement logic thăng chức user hoặc đánh dấu TODO \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 47 & Method getTotalSales() nên return giá trị thay vì void & Đổi return type thành double hoặc int và return giá trị \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 53 & Method getTopFiveCustomers() nên return danh sách customers & Đổi return type thành List\textless{}Customer\textgreater{} và return danh sách \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 58 & Method getTopTenBooks() nên return danh sách books & Đổi return type thành List\textless{}Book\textgreater{} và return danh sách \\
+    \midrule
+    16 & Does each class have an appropriate constructor? & 3 & Class Manager thiếu constructor, có thể cần constructor để khởi tạo & Thêm constructor hoặc sử dụng super() constructor từ User \\
+    \midrule
+    35 & Are null bodied control structures correct and marked with braces or comments? & 12 & Các methods có body trống nên được đánh dấu với comment TODO hoặc NotImplementedException & Thêm // TODO: implement this method \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 3 & Class Manager thiếu header comment tổng quan & Thêm Javadoc comment mô tả class và vai trò của Manager \\
+    \midrule
+    64 & Are there any uncalled or unneeded methods? & 3 & Tất cả methods đều chưa được implement, cần xác nhận có cần thiết không & Xem xét loại bỏ methods không cần thiết hoặc implement đầy đủ \\
+\end{longtable}

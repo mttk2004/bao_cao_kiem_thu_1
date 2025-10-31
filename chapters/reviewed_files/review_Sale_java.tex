@@ -1,0 +1,63 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Sale.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Sale.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Sale.java}} \label{tab:review_Sale_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 9 & Tên thuộc tính sale\_name vi phạm Java naming convention & saleName \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 15 & Tên thuộc tính sale\_date vi phạm Java naming convention & saleDate \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 19 & Tên thuộc tính user\_first\_name vi phạm Java naming convention & userFirstName \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 20 & Tên thuộc tính user\_last\_name vi phạm Java naming convention & userLastName \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 23 & Method getSale\_date() vi phạm Java naming convention & getSaleDate() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 27 & Method setSale\_date() vi phạm Java naming convention & setSaleDate(Date saleDate) \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 31 & Method getUser\_first\_name() vi phạm Java naming convention & getUserFirstName() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 35 & Method setUser\_first\_name() vi phạm Java naming convention & setUserFirstName(String userFirstName) \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 39 & Method getUser\_last\_name() vi phạm Java naming convention & getUserLastName() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 43 & Method setUser\_last\_name() vi phạm Java naming convention & setUserLastName(String userLastName) \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 63 & Method getSale\_name() vi phạm Java naming convention & getSaleName() \\
+    \midrule
+    13 & Are descriptive method names used in accord with naming conventions? & 67 & Method setSale\_name() vi phạm Java naming convention & setSaleName(String saleName) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 47 & Constructor không kiểm tra tham số ISBN và copies có hợp lệ & Thêm kiểm tra if (ISBN \textless{}= 0 || copies \textless{}= 0) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 53 & Setter setCopies không kiểm tra giá trị âm & Thêm kiểm tra if (copies \textless{}= 0) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 57 & Setter setISBN không kiểm tra giá trị âm & Thêm kiểm tra if (ISBN \textless{}= 0) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 59 & Setter setPrice không kiểm tra giá trị null hoặc âm & Thêm kiểm tra if (price == null || price \textless{} 0) \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 5 & Class Sale thiếu header comment tổng quan & Thêm Javadoc comment mô tả class Sale \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 6 & Các thuộc tính ISBN, copies, price thiếu comment & Thêm comment giải thích mục đích của từng thuộc tính \\
+\end{longtable}

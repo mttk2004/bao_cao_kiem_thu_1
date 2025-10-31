@@ -1,0 +1,63 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{SalesDAO.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{SalesDAO.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{SalesDAO.java}} \label{tab:review_SalesDAO_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    11 & Are there attributes that should be local variables? & 18 & Biến total\_sales là instance variable nhưng được sử dụng trong static method & Chuyển thành local variable trong method getTotalSales() \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 131 & SQL concatenation với user\_id và sales data gây SQL injection vulnerability & Sử dụng PreparedStatement với placeholders cho user\_id, ISBN, copies \\
+    \midrule
+    40 & Have all files been closed after use? & 31 & ResultSet trong getTotalSales() có thể không được close nếu có exception & Sử dụng try-with-resources hoặc finally block \\
+    \midrule
+    40 & Have all files been closed after use? & 55 & ResultSet trong getTopFiveCustomers() không được close & Thêm result.close() trong finally block \\
+    \midrule
+    40 & Have all files been closed after use? & 93 & ResultSet trong getTopTenBooks() không được close & Thêm result.close() trong finally block \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 31 & getTotalSales() không gọi result.next() trước khi getDouble() & Thêm if (result.next()) trước result.getDouble(1) \\
+    \midrule
+    20 & Are there any computations with mixed data types? & 73 & sum\_paid được khai báo int nhưng có thể là số thập phân từ calculation & Đổi sang double: double sum\_paid = result.getDouble("sum\_paid") \\
+    \midrule
+    1 & Does the code correctly implement the design? & 42 & SQL query logic cho "last 3 months" có vấn đề với YEAR và MONTH comparison & Sử dụng DATE\_SUB(CURDATE(), INTERVAL 3 MONTH) đơn giản hơn \\
+    \midrule
+    1 & Does the code correctly implement the design? & 87 & getTopTenBooks() không có time filter cho "last three months" như comment & Thêm WHERE clause với date filter như các methods khác \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 55 & Exception handling tách biệt executeQuery và process ResultSet gây inconsistent state & Gộp vào một try-catch block hoặc handle differently \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 126 & Method checkout() không validate sales list và user\_id & Kiểm tra sales != null, !sales.isEmpty(), user\_id không null/empty \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 138 & SQLException trong checkout() chỉ set status false, không rollback transaction & Implement proper transaction rollback khi có lỗi \\
+    \midrule
+    1 & Does the code correctly implement the design? & 143 & checkout() không update book inventory sau khi bán & Thêm logic giảm book copies sau khi insert Sale success \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 76 & result.getString() có thể return null gây issues khi tạo User object & Kiểm tra null values và handle appropriately \\
+    \midrule
+    54 & For each method: Is it no more than about 60 lines long? & 126 & Method checkout() thực hiện quá nhiều logic trong một method & Chia thành các methods nhỏ: insertSale(), updateInventory(), etc. \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 18 & Tên biến total\_sales vi phạm Java naming convention & totalSales \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 17 & Class SalesDAO thiếu header comment chi tiết & Thêm Javadoc mô tả statistics operations và business rules \\
+    \midrule
+    66 & Are there any blocks of repeated code that could be condensed into a single method? & 17 & Pattern execute query và handle ResultSet lặp lại nhiều lần & Tạo utility methods để reduce duplication \\
+\end{longtable}

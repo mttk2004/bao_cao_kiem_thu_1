@@ -9,6 +9,16 @@
 % Cấu hình lề giấy
 \usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{geometry} % Để tùy chỉnh lề nếu cần
+\geometry{a4paper, margin=1in}
+\usepackage{hyperref} % Để liên kết nhãn bảng
+\usepackage{booktabs} % Chotoprule, midrule, bottomrule
+\usepackage{amsmath} % Gói toán học cơ bản, đôi khi cần cho các ký tự
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
 % Chọn font Times New Roman cho chữ chính và JetBrains Mono cho code
 \setmainfont{Times New Roman}
 \setmonofont{JetBrains Mono}[Scale=0.9]
@@ -64,13 +74,12 @@
     \centering
     \sffamily
 
-    % Cập nhật đường dẫn hình ảnh logo
-    \includegraphics[width=0.3\textwidth]{images/logo_sgu.png}
-    \vspace{1cm}
-
     {\Large ỦY BAN NHÂN DÂN THÀNH PHỐ HỒ CHÍ MINH\par}
     {\LARGE \textbf{TRƯỜNG ĐẠI HỌC SÀI GÒN}\par}
     {\Large \textbf{KHOA CÔNG NGHỆ THÔNG TIN}\par}
+    \vspace{1cm}
+
+    \includegraphics[width=0.3\textwidth]{images/logo_sgu.png}
 
     \vfill
 
@@ -109,8 +118,9 @@
 % --- NẠP CÁC CHƯƠNG TỪ CÁC FILE RIÊNG ---
 \input{chapters/01_phan_cong.tex}
 \input{chapters/02_quy_trinh.tex}
-\input{chapters/03_van_de.tex}
-\input{chapters/04_thong_ke.tex}
-\input{chapters/05_ket_luan.tex}
+\input{chapters/03_ket_qua}
+\input{chapters/04_van_de}
+\input{chapters/05_thong_ke}
+\input{chapters/06_ket_luan}
 
 \end{document}

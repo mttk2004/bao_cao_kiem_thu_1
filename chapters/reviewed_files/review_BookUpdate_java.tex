@@ -1,0 +1,63 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{BookUpdate.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{BookUpdate.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{BookUpdate.java}} \label{tab:review_BookUpdate_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    19 & For every object or array reference: Is the value certain to be non-null? & 22 & request.getParameter() có thể return null gây NullPointerException & Kiểm tra null cho tất cả parameters trước khi sử dụng \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 23 & Gọi .equals() trên result của getParameter() có thể null & Sử dụng "edit".equals(request.getParameter("action")) \\
+    \midrule
+    66 & Are there any blocks of repeated code that could be condensed into a single method? & 32 & Error handling pattern lặp lại nhiều lần với cùng logic & Tạo helper method handleValidationError(request, response, message, update) \\
+    \midrule
+    54 & For each method: Is it no more than about 60 lines long? & 17 & Method doPost() quá dài (hơn 130 lines), khó maintain & Chia thành các methods nhỏ: validateBook(), processUpdate(), processAdd() \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 88 & Gọi getParameter(author) trong loop không check null result & String edited\_author = request.getParameter(author); if (edited\_author != null \&\& !edited\_author.isEmpty()) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 93 & newAuthor có thể null trước khi check isEmpty() & if (newAuthor != null \&\& !newAuthor.isEmpty()) \\
+    \midrule
+    66 & Are there any blocks of repeated code that could be condensed into a single method? & 110 & Hardcoded author1, author2, ..., author6 parameters & Sử dụng loop: for (int i = 1; i \textless{}= 6; i++) getParameter("author" + i) \\
+    \midrule
+    5 & Does the code completely implement the design? & 137 & Method doGet() có body trống, không handle GET requests & Implement doGet() hoặc redirect đến appropriate page \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 104 & copies parameter không được validate trước parseInt() trong add book & Kiểm tra copies != null trước khi parseInt() \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 103 & NumberFormatException cho copies không có return statement & Thêm return; sau forward() để tránh continued execution \\
+    \midrule
+    24 & For every boolean test: Is the correct condition checked? & 84 & Kiểm tra originalCopies bằng Integer.parseInt() không safe & Validate originalCopies trước khi parseInt() \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 87 & BookDAO.getBookAuthors() có thể return null & List\textless{}String\textgreater{} authorsList = BookDAO.getBookAuthors(...); if (authorsList != null) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 24 & Tất cả parameters từ request không được validate null & Tạo helper method validateRequiredParameter(request, paramName) \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 32 & Exception handling chỉ printStackTrace() và forward, không log properly & Sử dụng proper logging framework thay vì printStackTrace() \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 16 & Class thiếu detailed header comment về servlet functionality & Thêm Javadoc mô tả servlet purpose, parameters, và flow \\
+    \midrule
+    10 & Are there variables that should be constants? & 110 & Magic number 6 cho maximum authors nên là constant & private static final int MAX\_AUTHORS = 6; \\
+    \midrule
+    65 & Can any code be replaced by calls to external reusable objects? & 17 & Validation logic có thể extract thành separate validation class & Tạo BookValidationService để handle all validation logic \\
+    \midrule
+    64 & Are there any uncalled or unneeded methods? & 137 & doGet() method được override nhưng không implement & Implement doGet() hoặc xóa method nếu không cần \\
+\end{longtable}

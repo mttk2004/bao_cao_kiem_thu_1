@@ -1,0 +1,53 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Statistics.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Statistics.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Statistics.java}} \label{tab:review_Statistics_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    54 & For each method: Is it no more than about 60 lines long? & 21-87 & method doPost() quá dài (66+ lines) & chia thành methods nhỏ hơn: generateProfitReport(), generateCustomerReport(), generateBookReport() \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 23 & request.getParameter() không được validate null & kiểm tra null: if (request.getParameter("stat1") != null) \\
+    \midrule
+    40 & Have all files been closed after use? & 85-86 & response.getOutputStream() được close() nhưng không trong try-with-resources & sử dụng try-with-resources để đảm bảo proper cleanup \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 82-86 & exception chỉ được printStackTrace() không có proper error response & thêm error message và proper HTTP error response \\
+    \midrule
+    49 & Are all comments consistent with the code? & 88-89 & có commented code cần cleanup & xóa commented code: //prepare\_report(...) và //request.getRequestDispatcher(...) \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 18 & class thiếu javadoc comment & thêm /** javadoc comment */ \\
+    \midrule
+    12 & Do all attributes have appropriate access modifiers (private, protected, public)? & 20 & method doPost() nên có @Override annotation & thêm @Override annotation \\
+    \midrule
+    64 & Are there any uncalled or unneeded methods? & 18 & không có doGet() method & thêm doGet() hoặc comment giải thích tại sao chỉ có POST \\
+    \midrule
+    35 & Are null bodied control structures correct and marked with braces or comments? & 91 & doGet() method rỗng không có comment & thêm comment hoặc implementation \\
+    \midrule
+    66 & Are there any blocks of repeated code that could be condensed into a single method? & 23-76 & report generation logic lặp lại trong 3 if-else blocks & tạo helper method generateReport(String query, String title, Column[] columns) \\
+    \midrule
+    49 & Are all comments consistent with the code? & 24-75 & System.out.print() dùng để debug, không phù hợp production & sử dụng logger thay vì System.out.print() \\
+    \midrule
+    58 & Can a computation be moved outside a loop? & 22 & JasperReportBuilder report khởi tạo ở đầu nhưng chỉ dùng trong if-else & move report initialization vào trong từng if block \\
+    \midrule
+    34 & Can any nested if statements be converted into a switch statement? & 23-76 & chuỗi if-else if có thể convert thành switch hoặc strategy pattern & sử dụng switch statement với parameter values \\
+\end{longtable}

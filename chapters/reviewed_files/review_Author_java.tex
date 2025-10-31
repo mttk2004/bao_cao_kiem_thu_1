@@ -1,0 +1,41 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Author.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Author.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Author.java}} \label{tab:review_Author_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    1 & Does the code correctly implement the design? & 4 & Thuộc tính ISBN không phù hợp với Author, ISBN thuộc về Book & Thay ISBN bằng authorId hoặc xóa thuộc tính này \\
+    \midrule
+    12 & Do all attributes have appropriate access modifiers (private, protected, public)? & 4 & Thuộc tính ISBN không có access modifier rõ ràng & private int ISBN; \\
+    \midrule
+    12 & Do all attributes have appropriate access modifiers (private, protected, public)? & 5 & Thuộc tính name không có access modifier rõ ràng & private String name; \\
+    \midrule
+    16 & Does each class have an appropriate constructor? & 3 & Class Author thiếu constructor & Thêm constructor mặc định và constructor có tham số \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 3 & Class Author thiếu header comment & Thêm Javadoc comment mô tả class \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 4 & Thuộc tính ISBN thiếu comment & Thêm comment giải thích mục đích của thuộc tính \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 5 & Thuộc tính name thiếu comment & Thêm comment giải thích mục đích của thuộc tính \\
+\end{longtable}

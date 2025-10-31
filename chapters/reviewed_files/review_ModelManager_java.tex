@@ -1,0 +1,59 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{ModelManager.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{ModelManager.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{ModelManager.java}} \label{tab:review_ModelManager_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    46 & Does every attribute,variable or constant declaration have a comment? & 8 & Database credentials được hardcode trong source code, rất nguy hiểm về bảo mật & Sử dụng properties file hoặc environment variables cho database config \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 10 & Password được comment nhưng vẫn visible trong source code & Xóa hoàn toàn hardcoded passwords và sử dụng secure configuration \\
+    \midrule
+    40 & Have all files been closed after use? & 38 & Statement trong executeQuery() không được close, gây resource leak & Sử dụng try-with-resources hoặc close statement trong finally block \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 34 & Connection có thể null hoặc closed khi gọi executeQuery() & Kiểm tra connection.isClosed() trước khi sử dụng \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 25 & Exception chỉ printStackTrace(), không có recovery mechanism & Implement retry logic hoặc throw meaningful exceptions \\
+    \midrule
+    12 & Do all attributes have appropriate access modifiers (private, protected, public)? & 8 & Static fields nên có final modifier nếu không thay đổi & private static final String url = ... \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 18 & Singleton getInstance() không thread-safe, có thể tạo multiple instances & Sử dụng double-checked locking hoặc enum singleton \\
+    \midrule
+    36 & Does every method terminate? & 34 & executeQuery() có thể hang nếu database không response & Thêm timeout cho database operations \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 47 & closeConnection() catch exception nhưng không notify caller về failure & Log error level và có thể re-throw exception \\
+    \midrule
+    10 & Are there variables that should be constants? & 12 & pagecount nên là constant thay vì variable & private static final int PAGE\_COUNT = 20; \\
+    \midrule
+    6 & Are descriptive variable and constant names used in accord with naming conventions? & 12 & Tên biến pagecount vi phạm Java naming convention & PAGE\_COUNT hoặc pageCount \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 7 & Class thiếu header comment chi tiết về singleton pattern và thread safety & Thêm Javadoc comment về usage và thread safety warnings \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 34 & executeQuery() không validate query parameter có null hay empty & Thêm validation: if (query == null || query.trim().isEmpty()) \\
+    \midrule
+    40 & Have all files been closed after use? & 34 & Method executeQuery() trả về ResultSet nhưng caller có thể quên close & Document rõ responsibility của caller để close ResultSet \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 22 & startConnection() có thể fail nhưng không set connection = null & Set connection = null trong catch block để indicate failure \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 38 & executeQuery() luôn return ResultSet kể cả khi query fail & Kiểm tra execution success trước khi return ResultSet \\
+\end{longtable}

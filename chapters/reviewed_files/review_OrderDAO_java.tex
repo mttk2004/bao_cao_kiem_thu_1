@@ -1,0 +1,59 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{OrderDAO.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{OrderDAO.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{OrderDAO.java}} \label{tab:review_OrderDAO_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    15 & Is every method parameter value checked before being used? & 23 & SQL concatenation trực tiếp với newOrder.getISBN() gây SQL injection vulnerability & Sử dụng PreparedStatement với placeholder cho ISBN và quantity \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 42 & SQL concatenation với confirmedOrder.getOrderID() gây SQL injection vulnerability & Sử dụng PreparedStatement với placeholder cho order\_id \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 53 & SQL concatenation với offset gây SQL injection vulnerability & Sử dụng PreparedStatement với placeholder cho OFFSET \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 21 & Method placeOrder() không validate newOrder có null hay các thuộc tính hợp lệ & Kiểm tra newOrder != null và validate ISBN \textgreater{} 0, quantity \textgreater{} 0 \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 40 & Method confirmOrder() không validate confirmedOrder và orderID & Kiểm tra confirmedOrder != null và orderID không empty \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 51 & Method getOrders() không validate offset có âm hay null & Kiểm tra offset \textgreater{}= 0, nếu null thì set default 0 \\
+    \midrule
+    40 & Have all files been closed after use? & 56 & ResultSet không được close trong getOrders(), gây resource leak & Sử dụng try-with-resources hoặc close trong finally block \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 26 & Exception chỉ printStackTrace() không có proper error handling & Log error và return meaningful error status hoặc throw custom exception \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 44 & confirmOrder() SQLException không được handle đúng cách & Implement proper error recovery và rollback nếu cần \\
+    \midrule
+    1 & Does the code correctly implement the design? & 40 & confirmOrder() chỉ delete order nhưng không update book quantity như comment mô tả & Thêm logic update book copies sau khi confirm order \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 58 & ResultSet rs có thể null nếu executeQuery() fail & Kiểm tra rs != null trước khi sử dụng \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 66 & SQLException trong getOrders() chỉ printStackTrace, không return error & Return empty list hoặc throw meaningful exception \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 26 & placeOrder() return true ngay sau executeQuery() không kiểm tra thực sự success & Kiểm tra affected rows \textgreater{} 0 để confirm insertion success \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 44 & confirmOrder() return true ngay sau executeQuery() không verify deletion & Kiểm tra affected rows \textgreater{} 0 để confirm deletion success \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 16 & Class OrderDAO thiếu header comment chi tiết về responsibility & Thêm Javadoc comment mô tả class và các operations \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 60 & rs.getString(), rs.getInt() có thể return null gây issues & Kiểm tra null values trước khi set vào Order object \\
+\end{longtable}

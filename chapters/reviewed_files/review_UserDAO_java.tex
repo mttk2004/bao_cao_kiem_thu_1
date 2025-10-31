@@ -1,0 +1,63 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{UserDAO.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{UserDAO.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{UserDAO.java}} \label{tab:review_UserDAO_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    15 & Is every method parameter value checked before being used? & 25 & SQL concatenation với email trong login() gây SQL injection vulnerability nghiêm trọng & Sử dụng PreparedStatement với placeholder cho email parameter \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 111 & SQL concatenation với email trong getUser() gây SQL injection vulnerability & Sử dụng PreparedStatement thay vì string concatenation \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 176 & SQL concatenation với email trong promoteUser() gây SQL injection vulnerability & Sử dụng PreparedStatement với placeholder cho email \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 40 & Debug output in ra password và salt hash, rất nguy hiểm về bảo mật & Xóa hoàn toàn debug output chứa sensitive data \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 20 & Method login() không validate email và password có null hay empty & Thêm validation cho email format và password không null/empty \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 58 & Method register() không validate User object và các thuộc tính & Validate user != null và các required fields không null \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 107 & Method getUser() không validate email parameter & Kiểm tra email != null và format hợp lệ \\
+    \midrule
+    40 & Have all files been closed after use? & 28 & ResultSet trong login() có thể không được close nếu có exception trong while loop & Sử dụng try-with-resources để auto-close \\
+    \midrule
+    40 & Have all files been closed after use? & 84 & PreparedStatement trong register() không được close & Thêm pst.close() trong finally block hoặc try-with-resources \\
+    \midrule
+    40 & Have all files been closed after use? & 158 & PreparedStatement trong updateUser() chỉ close khi success, không close khi fail & Move pst.close() ra ngoài if statement \\
+    \midrule
+    4 & Does every method return the correct value at every method return point? & 32 & login() return true ngay khi tìm thấy match đầu tiên, không check multiple users & Break khỏi loop khi tìm thấy match để tránh override status \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 72 & rs.isBeforeFirst() có thể throw exception nếu ResultSet đã closed & Kiểm tra rs != null trước khi gọi methods \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 36 & Multiple exception types trong try-catch nhưng handling giống nhau & Handle riêng từng exception type với appropriate actions \\
+    \midrule
+    1 & Does the code correctly implement the design? & 153 & updateUser() không update salt khi update password, có thể gây security issue & Thêm salt parameter hoặc generate new salt khi update password \\
+    \midrule
+    24 & For every boolean test: Is the correct condition checked? & 32 & login() kiểm tra password trong while loop, có thể override previous results & Sử dụng if thay vì while hoặc break when found \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 17 & Class UserDAO thiếu header comment chi tiết về security practices & Thêm Javadoc về authentication flow và security considerations \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 125 & getUser() return null khi có exception, caller không biết lỗi gì xảy ra & Throw meaningful exception hoặc return Optional\textless{}User\textgreater{} \\
+    \midrule
+    66 & Are there any blocks of repeated code that could be condensed into a single method? & 17 & Pattern execute query và handle ResultSet lặp lại với small variations & Tạo utility method cho common database operations \\
+\end{longtable}

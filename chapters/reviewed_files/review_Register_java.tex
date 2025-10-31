@@ -1,0 +1,51 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Register.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Register.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Register.java}} \label{tab:review_Register_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    15 & Is every method parameter value checked before being used? & 19-24 & các parameters từ request không được validate null & thêm null check cho email, FName, LName, pass trước khi sử dụng \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 19-24 & request.getParameter() có thể return null & kiểm tra null: if (email != null \&\& !email.isEmpty()) \\
+    \midrule
+    37 & Are all exceptions handled appropriately? & 32-36 & exception chỉ được printStackTrace() mà không có proper handling & thêm error message và redirect đến error page \\
+    \midrule
+    49 & Are all comments consistent with the code? & 39-40 & có nhiều commented code cần cleanup & xóa commented code: //response.sendRedirect("welcome.jsp"), //response.sendRedirect("home.jsp") \\
+    \midrule
+    49 & Are all comments consistent with the code? & 39-47 & System.out.println() và log() cùng lúc là redundant & chỉ dùng log() thay vì cả hai \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 16 & class thiếu javadoc comment & thêm /** javadoc comment */ \\
+    \midrule
+    12 & Do all attributes have appropriate access modifiers (private, protected, public)? & 17 & method doPost() nên có @Override annotation & thêm @Override annotation \\
+    \midrule
+    64 & Are there any uncalled or unneeded methods? & 16 & không có doGet() method & thêm doGet() hoặc comment giải thích tại sao chỉ có POST \\
+    \midrule
+    35 & Are null bodied control structures correct and marked with braces or comments? & 51 & doGet() method rỗng không có comment & thêm comment hoặc implementation \\
+    \midrule
+    24 & Is the correct condition checked? & 44-48 & logic inconsistent: success case dùng forward, fail case dùng sendRedirect & sử dụng consistent response handling \\
+    \midrule
+    8 & Is every variable properly initialized? & 30-31 & encryptedPwd và salt khởi tạo null nhưng có thể không được set nếu có exception & kiểm tra null trước khi set vào user \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 33 & request.getParameter("pass") không được validate null & validate password trước khi encrypt: if (password != null \&\& !password.isEmpty()) \\
+\end{longtable}

@@ -1,0 +1,51 @@
+% Định nghĩa một kiểu cột mới cho phép xuống dòng và canh lề trái
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\section{Review file \texttt{Publisher.java}}
+
+Bảng dưới đây tổng hợp các vấn đề được phát hiện trong file \texttt{Publisher.java}.
+
+
+\begin{longtable}{L{1.5cm} L{3.5cm} c L{4cm} L{4cm}}
+    \caption{Bảng review chi tiết cho file \texttt{Publisher.java}} \label{tab:review_Publisher_java} \\
+
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{5}{c}%
+    {{\tablename\ \thetable{} -- tiếp theo}} \\
+    \toprule
+    \textbf{Check code} & \textbf{Check code Description} & \textbf{Line} & \textbf{Comment} & \textbf{Suggestion / Fix} \\
+    \midrule
+    \endhead
+
+    \bottomrule
+    \endfoot
+
+    \endlastfoot
+    8 & Is every variable properly initialized? & 7 & Thuộc tính addresses không được khởi tạo, có thể gây NullPointerException & addresses = new ArrayList\textless{}\textgreater{}(); trong constructor \\
+    \midrule
+    8 & Is every variable properly initialized? & 8 & Thuộc tính phones không được khởi tạo, có thể gây NullPointerException & phones = new ArrayList\textless{}\textgreater{}(); trong constructor \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 14 & Getter getAddresses() có thể trả về null gây NullPointerException & Khởi tạo addresses hoặc kiểm tra null trước khi return \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 18 & Getter getPhones() có thể trả về null gây NullPointerException & Khởi tạo phones hoặc kiểm tra null trước khi return \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 14 & Getter getAddresses() trả về reference trực tiếp, có thể bị modify từ bên ngoài & return new ArrayList\textless{}\textgreater{}(addresses); để bảo vệ encapsulation \\
+    \midrule
+    19 & For every object or array reference: Is the value certain to be non-null? & 18 & Getter getPhones() trả về reference trực tiếp, có thể bị modify từ bên ngoài & return new ArrayList\textless{}\textgreater{}(phones); để bảo vệ encapsulation \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 24 & Setter setName không kiểm tra tham số name có null hay empty & Thêm kiểm tra if (name == null || name.trim().isEmpty()) \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 28 & Setter setAddresses không kiểm tra tham số addresses có null & Thêm kiểm tra if (addresses == null) hoặc tạo defensive copy \\
+    \midrule
+    15 & Is every method parameter value checked before being used? & 32 & Setter setPhones không kiểm tra tham số phones có null & Thêm kiểm tra if (phones == null) hoặc tạo defensive copy \\
+    \midrule
+    16 & Does each class have an appropriate constructor? & 5 & Class Publisher thiếu constructor để khởi tạo collections & Thêm constructor khởi tạo addresses và phones \\
+    \midrule
+    45 & Does every method, class, and file have an appropriate header comment? & 5 & Class Publisher thiếu header comment & Thêm Javadoc comment mô tả class Publisher \\
+    \midrule
+    46 & Does every attribute,variable or constant declaration have a comment? & 6 & Các thuộc tính name, addresses, phones thiếu comment & Thêm comment giải thích mục đích của từng thuộc tính \\
+\end{longtable}
